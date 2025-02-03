@@ -86,7 +86,7 @@ Errors StackPop(stack* my_stack, stack_element* pop_element) ;
 void StackDump(stack* my_stack, Errors err ON_DEBUG(, char* file, char * function, int number_of_line) );
 void StackDestroy(stack* my_stack) ;
 Errors StackCheck(stack* my_stack, const int what_to_check);
-hash_element CountHashOfStack(stack* my_stack) ;
+//hash_element CountHashOfStack(stack* my_stack) ;
 hash_element CountHashOfData(stack* my_stack) ;
 hash_element fnv1aHash(const void* data, size_t size);
 hash_element djb2_hash(const void* data, size_t size);

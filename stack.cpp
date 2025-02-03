@@ -59,7 +59,7 @@ Errors StackInit(stack * my_stack, size_t capacity) {
         my_stack->data[i] = DEFAULT_VALUE;
     }
     my_stack->hash_data = CountHashOfData(my_stack);
-    my_stack->hash_stack = CountHashOfStack(my_stack);
+    //my_stack->hash_stack = CountHashOfStack(my_stack);
     //printf("\niuiycturci62\n");
 
     PROTECT_ALL;
@@ -93,7 +93,7 @@ Errors StackPush(stack* my_stack, stack_element new_element ) {
 
     my_stack -> size++;
     my_stack->hash_data = CountHashOfData(my_stack);
-    my_stack->hash_stack = CountHashOfStack(my_stack);
+    //my_stack->hash_stack = CountHashOfStack(my_stack);
     //printf("\nriofboerbou size = %i\n", my_stack->size);
     
     // err = MakeErr(StackCheck(my_stack, CHECK_ALL), __FILE__, INIT,  __LINE__);
@@ -127,7 +127,7 @@ Errors StackPop(stack* my_stack, stack_element* pop_element) {
 
     my_stack->size--;
     my_stack->hash_data = CountHashOfData(my_stack);
-    my_stack->hash_stack = CountHashOfStack(my_stack);
+    //my_stack->hash_stack = CountHashOfStack(my_stack);
 
     PROTECT_ALL;
     
@@ -290,11 +290,11 @@ Errors StackCheck(stack* my_stack, const int what_to_check) {
                 //printf("jhgjfcufc");
             return WRONG_CANARY;
         }
-        hash_element new_stack_hash = CountHashOfStack(my_stack);
+        //hash_element new_stack_hash = CountHashOfStack(my_stack);
 
-        if(new_stack_hash != my_stack->hash_stack){
-            return WRONG_HASH_OF_STACK;
-        }
+        // if(new_stack_hash != my_stack->hash_stack){
+        //     return WRONG_HASH_OF_STACK;
+        // }
 
         hash_element new_data_hash = CountHashOfData(my_stack);
 
@@ -328,11 +328,11 @@ Errors StackCheck(stack* my_stack, const int what_to_check) {
         break;
     }
     case CHECK_HASH: {
-        hash_element new_stack_hash = CountHashOfStack(my_stack);
+        // hash_element new_stack_hash = CountHashOfStack(my_stack);
 
-        if(new_stack_hash != my_stack->hash_stack){
-            return WRONG_HASH_OF_STACK;
-        }
+        // if(new_stack_hash != my_stack->hash_stack){
+        //     return WRONG_HASH_OF_STACK;
+        // }
 
         hash_element new_data_hash = CountHashOfData(my_stack);
 
@@ -352,20 +352,20 @@ Errors StackCheck(stack* my_stack, const int what_to_check) {
 }
 
 
-hash_element CountHashOfStack(stack* my_stack) {
-    hash_element temp_hash = my_stack -> hash_stack;
-    my_stack -> hash_stack = 0;
+// hash_element CountHashOfStack(stack* my_stack) {
+//     hash_element temp_hash = my_stack -> hash_stack;
+//     my_stack -> hash_stack = 0;
 
-    info temp_info = my_stack->main_info;
-    my_stack->main_info = MakeInfo("", "", 0);
+//     info temp_info = my_stack->main_info;
+//     my_stack->main_info = MakeInfo("", "", 0);
 
-    hash_element hash = fnv1aHash(my_stack, sizeof(stack));
+//     hash_element hash = djb2_hash(my_stack, sizeof(stack));
 
-    my_stack -> hash_stack = temp_hash;
-    my_stack->main_info = temp_info;
+//     my_stack -> hash_stack = temp_hash;
+//     my_stack->main_info = temp_info;
 
-    return hash;
-}
+//     return hash;
+// }
 
 hash_element CountHashOfData(stack* my_stack) {
     hash_element hash = djb2_hash(my_stack -> data, my_stack -> capacity * sizeof(my_stack -> data[0]));
@@ -373,14 +373,14 @@ hash_element CountHashOfData(stack* my_stack) {
     return hash;
 }
 hash_element fnv1aHash(const void* data, size_t size) {
-    hash_element hash = 2166136261u; // Начальное значение FNV-1a
+    hash_element hash = 21; // Начальное значение FNV-1a
 
     const unsigned char* data_new = (const unsigned char*) data;
 
     for (size_t i = 0; i < size; i++)
     {
         hash ^= data_new[i];      // XOR с текущим байтом
-        hash *= 16777619;         // Умножение на FNV-1a prime
+        hash *= 16;         // Умножение на FNV-1a prime
     }
 
     return hash;
